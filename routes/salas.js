@@ -4,7 +4,7 @@ const mysql = require('../mysql').pool;
 
 
 
-router.get((req, res, next) => {
+router.get('/lista', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -29,7 +29,7 @@ router.get((req, res, next) => {
 
     })
 })
-router.get((req, res, next) => {
+router.get('/:id_sala', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -53,7 +53,7 @@ router.get((req, res, next) => {
         )
     })
 })
-router.post((req, res, next) => {
+router.post('/cadastro', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -77,7 +77,7 @@ router.post((req, res, next) => {
         )
     })
 })
-router.patch((req, res, next) => {
+router.patch('/editar', (req, res, next) => {
     mysql.getConnection((req, res, next) => {
         if (error) {
             res.status(500).send({ error: error })
