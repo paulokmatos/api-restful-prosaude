@@ -101,3 +101,5 @@ router.patch('/editar', (req, res, next) => {
         )
     })
 })
+
+module.exports = router;
