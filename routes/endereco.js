@@ -66,3 +66,6 @@ router.post('/cadastro', (req, res, next) => {
         )
     })
 })
+
+
+module.exports = router;
