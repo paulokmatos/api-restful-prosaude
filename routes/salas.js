@@ -36,7 +36,7 @@ router.get('/:id_sala', (req, res, next) => {
         }
 
         conn.query(
-            'SELECT * FROM WHERE id_sala = ?',
+            'SELECT * FROM salas WHERE id_sala = ?',
             [req.body.id_sala],
             (error, result, field) => {
                 if (error) {
@@ -60,7 +60,7 @@ router.post('/cadastro', (req, res, next) => {
         }
 
         conn.query(
-            'INSERT INTO (id_sala,nome_sala)VALUES(?,?)',
+            'INSERT INTO salas(id_sala,nome_sala)VALUES(?,?)',
             [req.body.id_sala, req.body.nome_sala],
             (error, result, field) => {
                 if (error) {
