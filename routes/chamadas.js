@@ -4,7 +4,7 @@ const mysql = require('../mysql').pool;
 const login = require('../middleware/login');
 
 
-router.get('/lista/:id_sala', (req, res, next) => {
+router.get('/lista/:id_sala', login, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -35,7 +35,7 @@ router.get('/lista/:id_sala', (req, res, next) => {
     });
 });
 
-router.get('/lista/:id_sala/:id_paciente', (req, res, next) => {
+router.get('/lista/:id_sala/:id_paciente', login, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })

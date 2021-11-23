@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('../mysql').pool;
+const login = require('../middleware/login');
 
 
-
-router.get('/lista', (req, res, next) => {
+router.get('/lista', login, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -29,7 +29,7 @@ router.get('/lista', (req, res, next) => {
 
     })
 })
-router.get('/:id_sala', (req, res, next) => {
+router.get('/:id_sala', login, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -54,7 +54,7 @@ router.get('/:id_sala', (req, res, next) => {
         )
     })
 })
-router.post('/cadastro', (req, res, next) => {
+router.post('/cadastro', login, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -78,7 +78,7 @@ router.post('/cadastro', (req, res, next) => {
         )
     })
 })
-router.patch('/editar', (req, res, next) => {
+router.patch('/editar', login, (req, res, next) => {
     mysql.getConnection((req, res, next) => {
         if (error) {
             res.status(500).send({ error: error })
