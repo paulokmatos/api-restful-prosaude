@@ -26,6 +26,7 @@ router.get('/lista/:id_sala', (req, res, next) => {
                         data_hora: call.data_hora,
                     }
                 });
+                return res.status(200).send(response)
             }
 
 
@@ -56,6 +57,7 @@ router.get('/lista/:id_sala/:id_paciente', (req, res, next) => {
                         data_hora: call.data_hora,
                     }
                 });
+                return res.status(200).send(response)
             }
 
 
@@ -98,6 +100,7 @@ router.post('/adicionar', (req, res, next) => {
                     id_sala: req.body.id_sala,
                     data_hora: req.body.data_hora
                 };
+                return res.status(200).send(response)
             }
 
 

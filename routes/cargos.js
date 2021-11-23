@@ -22,7 +22,7 @@ router.get('/lista', (req, res, next) => {
                     }
                 });
 
-                res.status(200).send(response)
+                return res.status(200).send(response)
 
             }
         )
@@ -50,6 +50,7 @@ router.get('/:id_usuario', (req, res, next) => {
                         id_usuario: car.id_usuario
                     }
                 });
+                return res.status(200).send(response)
             }
         )
     })
@@ -73,6 +74,7 @@ router.get('/tipo/lista', (req, res, next) => {
                         nome_cargo: car.nome_cargo
                     }
                 });
+                return res.status(200).send(response)
             }
         )
     })
@@ -97,6 +99,7 @@ router.get('/tipo/:id_cargo', (req, res, next) => {
                         nome_cargo: car.nome_cargo
                     }
                 });
+                return res.status(200).send(response)
             }
         )
     })
@@ -120,6 +123,7 @@ router.post('/cadastro', (req, res, next) => {
                     id_cargo: car.id_cargo,
                     id_usuario: car.id_usuario
                 };
+                return res.status(200).send(response)
             }
         )
     })
@@ -143,6 +147,7 @@ router.post('/tipo/cadastro', (req, res, next) => {
                         nome_cargo: car.nome_cargo
                     }
                 });
+                return res.status(200).send(response)
             }
         )
     })

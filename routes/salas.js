@@ -22,7 +22,7 @@ router.get('/lista', (req, res, next) => {
                         nome_sala: sala.nome_sala
                     }
                 });
-                res.status(200).send(response)
+                return res.status(200).send(response)
 
             }
         )
@@ -49,6 +49,7 @@ router.get('/:id_sala', (req, res, next) => {
                         nome_sala: sala.nome_sala
                     }
                 });
+                return res.status(200).send(response)
             }
         )
     })
@@ -72,7 +73,7 @@ router.post('/cadastro', (req, res, next) => {
                     nome_sala: req.body.nome_sala
                 };
 
-                res.status(200).send(response)
+                return res.status(200).send(response)
             }
         )
     })
@@ -96,7 +97,7 @@ router.patch('/editar', (req, res, next) => {
                     nome_sala: req.body.nome_sala
                 };
 
-                res.status(200).send(response)
+                return res.status(200).send(response)
             }
         )
     })
