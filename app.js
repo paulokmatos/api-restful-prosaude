@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 const rotaUsuario = require('./routes/usuario');
 const rotaSala = require('./routes/salas');
 const rotaChamada = require('./routes/chamadas');
-const rotaCargo = require('./routes/cargos');
 
 
 
@@ -37,7 +36,6 @@ app.use(function (req, res, next) {
 app.use('/usuario', rotaUsuario)
 app.use('/sala', rotaSala)
 app.use('/chamadas', rotaChamada)
-app.use('/cargos', rotaCargo)
 
 
 

@@ -119,9 +119,9 @@ router.post('/cadastro', (req, res, next) => {
                 }
 
                 const response = {
-                    mensagem: 'Cargo Relacionado ao Usuario',
-                    id_cargo: req.body.id_cargo,
-                    id_usuario: req.body.id_usuario
+                    mensagem: 'Cargo Adicionado ao Usuario',
+                    id_cargo: car.id_cargo,
+                    id_usuario: car.id_usuario
                 };
                 return res.status(200).send(response)
             }
@@ -135,22 +135,20 @@ router.post('/tipo/cadastro', (req, res, next) => {
             res.status(500).send({ error: error })
         }
         conn.query(
-            'INSERT INTO cargos_tipo(id_cargo,nome_cargo)VALUES(?,?)',
-            [req.body.id_cargo, req.body.nome_cargo],
+            'INSERT INTO cargos_tipo()VALUES()',
             (error, result, field) => {
                 if (error) {
                     res.status(500).send({ error: error })
                 }
 
-                const response = {
-                    mensagem: 'Cargo Cadastrado',
-                    id_cargo: req.body.id_cargo,
-                    nome_cargo: req.body.nome_cargo
-                };
+                const response = result.map(car => {
+                    return {
+                        id_cargo: car.id_cargo,
+                        nome_cargo: car.nome_cargo
+                    }
+                });
                 return res.status(200).send(response)
             }
         )
     })
 });
-
-module.exports = router;
