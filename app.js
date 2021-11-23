@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 //Rotas -- Pasta Routes
 const rotaUsuario = require('./routes/usuario');
 const rotaSala = require('./routes/salas');
-
+const rotaChamada = require('./routes/chamadas');
 
 
 
@@ -35,6 +35,7 @@ app.use(function (req, res, next) {
 //Rotas -- App.use
 app.use('/usuario', rotaUsuario)
 app.use('/sala', rotaSala)
+app.use('/chamadas', rotaChamada)
 
 
 
