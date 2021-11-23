@@ -76,7 +76,7 @@ router.post('/adicionar', (req, res, next) => {
     const id = uniqid();
 
 
-    const date = new Date().toLocaleString("us-EN", { timeZone: "America/Sao_Paulo" });
+    const date = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
 
 
     mysql.getConnection((error, conn) => {
@@ -85,7 +85,7 @@ router.post('/adicionar', (req, res, next) => {
         }
 
         conn.query(
-            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora)VALUES('` + id + `',?,?,?,` + date + `)`,
+            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora)VALUES('` + id + `',?,?,?,NOW())`,
             [req.body.medico, req.body.id_paciente, req.body.id_sala],
             (error, result, field) => {
                 if (error) {
