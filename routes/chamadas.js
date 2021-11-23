@@ -76,7 +76,7 @@ router.post('/adicionar', (req, res, next) => {
     const id = uniqid();
 
 
-    const date = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+    const date = new Date().toLocaleString("us-EN", { timeZone: "America/Sao_Paulo" });
 
 
     mysql.getConnection((error, conn) => {
