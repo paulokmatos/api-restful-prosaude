@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('../mysql').pool;
+const login = require('../middleware/login');
 
 
 router.get('/lista/:id_sala', (req, res, next) => {
@@ -65,7 +66,7 @@ router.get('/lista/:id_sala/:id_paciente', (req, res, next) => {
     });
 });
 
-router.post('/adicionar', (req, res, next) => {
+router.post('/adicionar', login, (req, res, next) => {
 
     function uniqid(prefix = "", random = false) {
         const sec = Date.now() * 1000 + Math.random() * 1000;
