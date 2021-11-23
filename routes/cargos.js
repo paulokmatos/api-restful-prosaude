@@ -152,3 +152,5 @@ router.post('/tipo/cadastro', (req, res, next) => {
         )
     })
 });
+
+module.exports = router;
