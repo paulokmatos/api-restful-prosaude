@@ -66,4 +66,3 @@ router.post('/cadastro', (req, res, next) => {
         )
     })
 })
-
