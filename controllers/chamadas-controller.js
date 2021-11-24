@@ -121,7 +121,7 @@ exports.patchChamarPaciente = (req, res, next) => {
 
 
                 conn.query(
-                    `UPDATE chamadas SE chamar= 1 WHERE data_hora = ` + chamada.data + ``,
+                    `select * from chamadas`,
                     [req.params.id_sala],
                     (error, result, field) => {
                         if (error) {
@@ -131,7 +131,7 @@ exports.patchChamarPaciente = (req, res, next) => {
                             mensagem: 'Paciente irá ser Chamado'
                         };
 
-                        res.status(200).send(response)
+                        res.status(200).send(chamada)
                     }
                 )
             }
