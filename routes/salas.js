@@ -37,7 +37,7 @@ router.get('/:id_sala', login, (req, res, next) => {
 
         conn.query(
             'SELECT * FROM salas WHERE id_sala = ?',
-            [req.body.id_sala],
+            [req.params.id_sala],
             (error, result, field) => {
                 if (error) {
                     res.status(500).send({ error: error })
@@ -61,8 +61,8 @@ router.post('/cadastro', login, (req, res, next) => {
         }
 
         conn.query(
-            'INSERT INTO salas(id_sala,nome_sala)VALUES(?,?)',
-            [req.body.id_sala, req.body.nome_sala],
+            'INSERT INTO salas(id_sala,nome_sala,imagem)VALUES(?,?,?)',
+            [req.body.id_sala, req.body.nome_sala, req.body.imagem],
             (error, result, field) => {
                 if (error) {
                     res.status(500).send({ error: error })
@@ -70,7 +70,8 @@ router.post('/cadastro', login, (req, res, next) => {
 
                 const response = {
                     id_sala: req.body.id_sala,
-                    nome_sala: req.body.nome_sala
+                    nome_sala: req.body.nome_sala,
+                    imagem: req.body.imagem
                 };
 
                 return res.status(200).send(response)

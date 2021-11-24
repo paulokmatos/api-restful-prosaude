@@ -11,8 +11,8 @@ router.get('/lista/:id_sala', login, (req, res, next) => {
         }
 
         conn.query(
-            'SELECT * FROM chamadas WHERE id_sala = ? ORDER BY data_hora',
-            [req.body.id_sala],
+            'SELECT * FROM chamadas WHERE id_sala = ? ORDER BY data_hora ASC',
+            [req.params.id_sala],
             (error, result, field) => {
                 if (error) {
                     res.status(500).send({ error: error })
@@ -43,7 +43,7 @@ router.get('/lista/:id_sala/:id_paciente', login, (req, res, next) => {
 
         conn.query(
             'SELECT * FROM chamadas WHERE id_sala = ? AND id_paciente = ?',
-            [req.body.id_sala, req.body.id_paciente],
+            [req.params.id_sala, req.params.id_paciente],
             (error, result, field) => {
                 if (error) {
                     res.status(500).send({ error: error })
@@ -95,7 +95,7 @@ router.post('/adicionar', login, (req, res, next) => {
 
                 const response = {
                     mensagem: 'Paciente na fila de Chamadas',
-                    id_chamada: req.body.id_chamada,
+                    id_chamada: id,
                     medico: req.body.medico,
                     id_paciente: req.body.id_paciente,
                     id_sala: req.body.id_sala,

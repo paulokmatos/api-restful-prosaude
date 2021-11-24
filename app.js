@@ -10,7 +10,8 @@ const rotaUsuario = require('./routes/usuario');
 const rotaSala = require('./routes/salas');
 const rotaChamada = require('./routes/chamadas');
 const rotaCargo = require('./routes/cargos');
-
+const rotaPaciente = require('./routes/paciente');
+const rotaEndereco = require('./routes/endereco');
 
 
 app.use(morgan('dev'));
@@ -38,6 +39,8 @@ app.use('/usuario', rotaUsuario)
 app.use('/sala', rotaSala)
 app.use('/chamadas', rotaChamada)
 app.use('/cargos', rotaCargo)
+app.use('/paciente', rotaPaciente)
+app.use('/endereco', rotaEndereco)
 
 
 

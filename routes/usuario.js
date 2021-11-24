@@ -20,12 +20,11 @@ router.get('/lista', (req, res, next) => {
 
                 const response = result.map(user => {
                     return {
-                        id_usuario: user.id_usuario,
                         nome_usuario: user.nome_usuario,
                         rg: user.rg,
                         cpf: user.cpf,
+                        sexo: user.sexo,
                         data_nascimento: user.data_nascimento,
-                        idade: user.idade,
                         estado_civil: user.estado_civil,
                         endereco: user.endereco,
                         telefone: user.telefone,
@@ -36,6 +35,8 @@ router.get('/lista', (req, res, next) => {
                 return res.status(200).send(response)
             }
         )
+
+        conn.end();
     })
 });
 
@@ -46,7 +47,7 @@ router.get('/:id_usuario', (req, res, next) => {
         }
         conn.query(
             'SELECT * FROM usuarios WHERE id_usuario = ?',
-            [req.body.id_usuario],
+            [req.params.id_usuario],
             (error, result, field) => {
                 if (error) {
                     res.status(500).send({ error: error })
@@ -54,12 +55,11 @@ router.get('/:id_usuario', (req, res, next) => {
 
                 const response = result.map(user => {
                     return {
-                        id_usuario: user.id_usuario,
                         nome_usuario: user.nome_usuario,
                         rg: user.rg,
                         cpf: user.cpf,
+                        sexo: user.sexo,
                         data_nascimento: user.data_nascimento,
-                        idade: user.idade,
                         estado_civil: user.estado_civil,
                         endereco: user.endereco,
                         telefone: user.telefone,
@@ -70,6 +70,8 @@ router.get('/:id_usuario', (req, res, next) => {
                 return res.status(200).send(response)
             }
         )
+
+        conn.end();
     })
 });
 
@@ -99,17 +101,17 @@ router.post('/cadastro', (req, res, next) => {
 
 
                         conn.query(
-                            'INSERT INTO usuarios(id_usuario,nome_usuario,rg,cpf,data_nascimento,idade,estado_civil,endereco,telefone,login,senha)VALUES(?,?,?,?,?,?,?,?,?,?,?)',
-                            [req.body.id_usuario,
+                            'INSERT INTO usuarios(id_usuario,nome_usuario,rg,cpf,sexo,data_nascimento,estado_civil,endereco,telefone,login,senha)VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+                            [req.body.cpf,
                             req.body.nome_usuario,
                             req.body.rg,
                             req.body.cpf,
+                            req.body.sexo,
                             req.body.data_nascimento,
-                            req.body.idade,
                             req.body.estado_civil,
                             req.body.endereco,
                             req.body.telefone,
-                            req.body.login,
+                            req.body.cpf,
                                 hash],
 
                             (error, result, field) => {
@@ -119,12 +121,11 @@ router.post('/cadastro', (req, res, next) => {
 
                                 const response = {
                                     mensagem: 'Usuario Cadastrado',
-                                    id_usuario: req.body.id_usuario,
                                     nome_usuario: req.body.nome_usuario,
                                     rg: req.body.rg,
                                     cpf: req.body.cpf,
+                                    sexo: req.body.sexo,
                                     data_nascimento: req.body.data_nascimento,
-                                    idade: req.body.idade,
                                     estado_civil: req.body.estado_civil,
                                     endereco: req.body.endereco,
                                     telefone: req.body.telefone,
@@ -138,6 +139,9 @@ router.post('/cadastro', (req, res, next) => {
                 }
             }
         )
+
+
+        conn.end();
 
 
 

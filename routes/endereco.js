@@ -1,68 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('../mysql').pool;
+const enderecoController = require('../controllers/endereco-controller');
 
 
 
-router.get('/lista', (req, res, next) => {
-    mysql.getConnection((error, conn) => {
-        if (error) {
-            res.status(500).send({ error: error })
-        }
+router.get('/cidade/lista', enderecoController.getCidade);
 
-        conn.query(
-            'SELECT FROM endereco',
-            (error, result, field) => {
-                if (error) {
-                    res.status(500).send({ error: error })
-                }
+router.get('/bairro/lista', enderecoController.getBairro);
 
-                const response = result.map(end => {
-                    return {
-                        id_endereco: end.id_endereco,
-                        rua: end.rua,
-                        numero: end.numero,
-                        pais: end.pais,
-                        estado: end.estado,
-                        cidade: end.cidade,
-                        bairro: end.bairro,
-                        id_pessoa: end.id_pessoa
-                    }
-                });
+router.get('/estado/lista', enderecoController.getEstado);
 
-                return res.status(200).send(response)
-            }
-        )
-    })
+router.get('/pais/lista', enderecoController.getPais);
 
-})
+router.post('/cidade/cadastro', enderecoController.postCidade);
 
+router.post('/bairro/cadastro', enderecoController.postBairro);
 
-router.post('/cadastro', (req, res, next) => {
-    mysql.getConnection((error, conn) => {
-        if (error) { res.status(500).send({ error: error }) }
+router.post('/estado/cadastro', enderecoController.postEstado);
 
-        conn.query(
-            'INSERT INTO endereco (id_endereco,rua,numero,pais,estado,cidade,bairro,id_pessoa)VALUES(?,?,?,?,?,?,?,?)',
-            [req.body.id_endereco, req.body.rua, req.body.numero, req.body.pais, req.body.estado, req.body.cidade, req.body.bairro, req.body.id_pessoa],
-            (error, result, field) => {
-                if (error) {
-                    res.status(500).send({ error: error })
-                }
+router.post('/pais/cadastro', enderecoController.postPais);
 
-                const response = {
-                    id_endereco: end.id_endereco,
-                    rua: end.rua,
-                    numero: end.numero,
-                    pais: end.pais,
-                    estado: end.estado,
-                    cidade: end.cidade,
-                    bairro: end.bairro,
-                    id_pessoa: end.id_pessoa
-                };
+router.get('/lista', enderecoController.getEndereco)
 
-                return res.status(200).send(response)
-            }
-        )
-    })
-})
+router.get('/:id_endereco', enderecoController.getEnderecoId)
+
+router.post('/cadastro', enderecoController.postEndereco)
+
+module.exports = router;
