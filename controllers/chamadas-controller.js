@@ -118,7 +118,7 @@ exports.patchChamarPaciente = (req, res, next) => {
                     return { data: chamada.data_hora }
                 });
 
-                let data = [chamada.data];
+                let data = [chamada];
 
 
 
