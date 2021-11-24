@@ -113,9 +113,12 @@ exports.patchChamarPaciente = (req, res, next) => {
             'SELECT data_hora FROM (SELECT MIN(data_hora) AS data_hora FROM chamadas WHERE id_sala = ?) AS x',
             [req.params.id_sala],
             (error, results, field) => {
+
                 const chamada = results.map(chamada => {
                     return { data: chamada.data_hora }
                 });
+
+                let data = [chamada.data];
 
 
 
@@ -131,7 +134,7 @@ exports.patchChamarPaciente = (req, res, next) => {
                             mensagem: 'Paciente irá ser Chamado'
                         };
 
-                        res.status(200).send(chamada)
+                        res.status(200).send(data)
                     }
                 )
             }
