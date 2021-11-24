@@ -10,7 +10,7 @@ router.get('/lista/:id_sala/:id_paciente', login, chamadasController.getPaciente
 
 router.post('/adicionar', login, chamadasController.postChamada);
 
-
+router.patch('/chamar-paciente/:id_chamada', login, chamadasController.patchChamarPaciente)
 
 
 

@@ -81,7 +81,7 @@ exports.postChamada = (req, res, next) => {
         }
 
         conn.query(
-            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora)VALUES('` + id + `',?,?,?,NOW())`,
+            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,NOW(),0)`,
             [req.body.medico, req.body.id_paciente, req.body.id_sala],
             (error, result, field) => {
                 if (error) {
@@ -102,4 +102,26 @@ exports.postChamada = (req, res, next) => {
 
         )
     });
+};
+
+exports.patchChamarPaciente = (req, res, next) => {
+    mysql.getConnection((error, conn) => {
+        if (error) {
+            res.status(500).send({ error: error })
+        }
+        conn.query(
+            'UPDATE chamadas SET chamar=1 WHERE id_chamada=?',
+            [req.params.id_chamada],
+            (error, result, field) => {
+                if (error) {
+                    res.status(500).send({ error: error })
+                }
+                response = {
+                    mensagem: 'Paciente irá ser Chamado'
+                };
+
+                res.status(200).send(response)
+            }
+        )
+    })
 };
