@@ -110,8 +110,8 @@ exports.patchChamarPaciente = (req, res, next) => {
             res.status(500).send({ error: error })
         }
         conn.query(
-            'UPDATE chamadas SET chamar=1 WHERE id_chamada=?',
-            [req.params.id_chamada],
+            'UPDATE chamadas SET chamar= 1 WHERE data_hora = (SELECT data_hora FROM (SELECT MIN(data_hora) AS data_hora FROM chamadas WHERE id_sala =?) AS x)',
+            [req.params.id_sala],
             (error, result, field) => {
                 if (error) {
                     res.status(500).send({ error: error })
