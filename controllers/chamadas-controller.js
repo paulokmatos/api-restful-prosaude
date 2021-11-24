@@ -110,18 +110,32 @@ exports.patchChamarPaciente = (req, res, next) => {
             res.status(500).send({ error: error })
         }
         conn.query(
-            'UPDATE chamadas SET chamar= 1 WHERE data_hora = (SELECT data FROM (SELECT MIN(data_hora) AS data FROM chamadas WHERE id_sala = ?) AS x)',
+            'SELECT data_hora FROM (SELECT MIN(data_hora) AS data_hora FROM chamadas WHERE id_sala = ?) AS x',
             [req.params.id_sala],
-            (error, result, field) => {
-                if (error) {
-                    res.status(500).send({ error: error })
-                }
-                response = {
-                    mensagem: 'Paciente irá ser Chamado'
-                };
+            (error, results, field) => {
+                const chamada = results.map(chamada => {
+                    return { data: chamada.data_hora }
+                });
 
-                res.status(200).send(response)
+
+
+
+                conn.query(
+                    `UPDATE chamadas SE chamar= 1 WHERE data_hora = ` + chamada.data + ``,
+                    [req.params.id_sala],
+                    (error, result, field) => {
+                        if (error) {
+                            res.status(500).send({ error: error })
+                        }
+                        response = {
+                            mensagem: 'Paciente irá ser Chamado'
+                        };
+
+                        res.status(200).send(response)
+                    }
+                )
             }
         )
+
     })
 };
