@@ -135,7 +135,11 @@ exports.patchChamarPaciente = (req, res, next) => {
                         };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                         res.status(200).send(data)
+=======
+                        res.status(200).send(response)
+>>>>>>> parent of 106e1bc... teste
 =======
                         res.status(200).send(response)
 >>>>>>> parent of 106e1bc... teste
