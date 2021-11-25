@@ -34,7 +34,7 @@ exports.getCpf = async (req, res, next) => {
             )
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 exports.getListaPaciente = async (req, res, next) => {
@@ -69,7 +69,7 @@ exports.getListaPaciente = async (req, res, next) => {
             )
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 exports.getIdPaciente = async (req, res, next) => {
@@ -105,7 +105,7 @@ exports.getIdPaciente = async (req, res, next) => {
             )
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 exports.postPaciente = async (req, res, next) => {
@@ -154,6 +154,6 @@ exports.postPaciente = async (req, res, next) => {
 
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
