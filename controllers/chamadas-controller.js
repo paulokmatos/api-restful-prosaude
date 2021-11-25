@@ -71,10 +71,8 @@ exports.postChamada = (req, res, next) => {
 
     const id = uniqid();
 
-    let hoje = new Date();
-    let data = hoje.getFullYear() + "-" + hoje.getMonth() + "-" + hoje.getDate();
-    let time = hoje.getHours() + ":" + hoje.getMinutes() + ":" + hoje.getSeconds();
-    let data_hora = data + " " + time;
+
+    let data_hora = new Date().toISOString().slice(0, 19).replace('T', ' ');;
 
     const date = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
 
