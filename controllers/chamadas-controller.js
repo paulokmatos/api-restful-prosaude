@@ -1,7 +1,7 @@
 const mysql = require('../mysql').pool;
 
 
-exports.getListaSala = (req, res, next) => {
+exports.getListaSala = async (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -15,7 +15,7 @@ exports.getListaSala = (req, res, next) => {
                     res.status(500).send({ error: error })
                 }
 
-                const response = result.map(call => {
+                const response = await result.map(call => {
                     return {
                         id_chamada: call.id_chamada,
                         medico: call.medico,
@@ -24,14 +24,14 @@ exports.getListaSala = (req, res, next) => {
                         data_hora: call.data_hora,
                     }
                 });
-                return res.status(200).send(response)
+                return await res.status(200).send(response)
             }
 
 
         )
     });
 };
-exports.getPacienteChamada = (req, res, next) => {
+exports.getPacienteChamada = async (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -45,7 +45,7 @@ exports.getPacienteChamada = (req, res, next) => {
                     res.status(500).send({ error: error })
                 }
 
-                const response = result.map(call => {
+                const response = await result.map(call => {
                     return {
                         id_chamada: call.id_chamada,
                         medico: call.medico,
@@ -54,14 +54,14 @@ exports.getPacienteChamada = (req, res, next) => {
                         data_hora: call.data_hora,
                     }
                 });
-                return res.status(200).send(response)
+                return await res.status(200).send(response)
             }
 
 
         )
     });
 };
-exports.postChamada = (req, res, next) => {
+exports.postChamada = async (req, res, next) => {
 
     function uniqid(prefix = "", random = false) {
         const sec = Date.now() * 1000 + Math.random() * 1000;
@@ -70,11 +70,6 @@ exports.postChamada = (req, res, next) => {
     };
 
     const id = uniqid();
-
-
-    let data_hora = new Date().toISOString().slice(0, 19).replace('T', ' ');;
-
-    const date = new Date().toLocaleString({ timeZone: "America/Sao_Paulo" });
 
 
     mysql.getConnection((error, conn) => {
@@ -98,7 +93,7 @@ exports.postChamada = (req, res, next) => {
                     id_sala: req.body.id_sala,
                     data_hora: req.body.data_hora
                 };
-                return res.status(200).send(response)
+                return await res.status(200).send(response)
             }
 
 
@@ -106,7 +101,7 @@ exports.postChamada = (req, res, next) => {
     });
 };
 
-exports.patchChamarPaciente = (req, res, next) => {
+exports.patchChamarPaciente = async (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -134,7 +129,7 @@ exports.patchChamarPaciente = (req, res, next) => {
                             mensagem: 'Paciente irá ser Chamado'
                         };
 
-                        res.status(200).send(response)
+                        return await res.status(200).send(response)
                     }
                 )
             }
