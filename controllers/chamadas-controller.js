@@ -22,7 +22,7 @@ exports.getListaSala = async (req, res, next) => {
                             medico: call.medico,
                             id_paciente: call.id_paciente,
                             id_sala: call.id_sala,
-                            data_hora: call.data_hora,
+                            data_hora: call.data_hora
                         }
                     });
                     return res.status(200).send(response)
@@ -92,7 +92,7 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,NOW(),0)`,
+                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,finalizado)VALUES('` + id + `',?,?,?,NOW(),false,false)`,
                 [req.body.medico, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
@@ -160,6 +160,36 @@ exports.patchChamarPaciente = async (req, res, next) => {
             )
 
         })
+    } catch (error) {
+        return res.status(500).send({ error: error })
+    }
+};
+
+
+exports.patchChamadaFinalizada = async (req, res, next) => {
+    try {
+        await mysql.getConnection((error, conn) => {
+            if (error) {
+                res.status(500).send({ error: error })
+            }
+
+            conn.query(
+                'UPDATE chamadas SET finalizado = true WHERE id_chamada = ?',
+                [req.params.id_chamada],
+                (error, result, field) => {
+                    if (error) {
+                        res.status(500).send({ error: error })
+                    }
+
+                    const response = {
+                        mensagem: 'Chamada Finalizada'
+                    };
+                    return res.status(200).send(response)
+                }
+
+
+            )
+        });
     } catch (error) {
         return res.status(500).send({ error: error })
     }
