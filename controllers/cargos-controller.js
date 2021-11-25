@@ -29,7 +29,7 @@ exports.getLista = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 
 };
@@ -60,7 +60,7 @@ exports.getCargoIdUsuario = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 exports.getListaTipoCargo = async (req, res, next) => {
@@ -88,7 +88,7 @@ exports.getListaTipoCargo = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 exports.getTipoIdCargo = async (req, res, next) => {
@@ -117,7 +117,7 @@ exports.getTipoIdCargo = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 
@@ -146,7 +146,7 @@ exports.postCargoUsuario = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 
@@ -175,6 +175,6 @@ exports.postTipoCargo = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };

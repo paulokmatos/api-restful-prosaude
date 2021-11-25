@@ -32,7 +32,7 @@ exports.getListaSala = async (req, res, next) => {
             )
         });
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 exports.getPacienteChamada = async (req, res, next) => {
@@ -66,7 +66,7 @@ exports.getPacienteChamada = async (req, res, next) => {
             )
         });
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 exports.postChamada = async (req, res, next) => {
@@ -114,7 +114,7 @@ exports.postChamada = async (req, res, next) => {
             )
         });
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
 
@@ -155,6 +155,6 @@ exports.patchChamarPaciente = async (req, res, next) => {
 
         })
     } catch (error) {
-        res.status(500).send({ error: error })
+        return res.status(500).send({ error: error })
     }
 };
