@@ -112,7 +112,7 @@ exports.patchChamarPaciente = (req, res, next) => {
             res.status(500).send({ error: error })
         }
         conn.query(
-            `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora FROM (SELECT MIN(data_hora) AS data_hora FROM chamadas WHERE id_sala = ?) AS x`,
+            `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora FROM (SELECT MIN(data_hora) AS data_hora FROM chamadas WHERE chamar = false AND id_sala = ?) AS x`,
             [req.params.id_sala],
             (error, results, field) => {
                 const chamada = results.map(call => {
@@ -125,7 +125,7 @@ exports.patchChamarPaciente = (req, res, next) => {
 
 
                 conn.query(
-                    `UPDATE chamadas SET chamar= 1 WHERE data_hora LIKE '%` + dataChamada + `%'`,
+                    `UPDATE chamadas SET chamar= true WHERE data_hora LIKE '%` + dataChamada + `%'`,
                     (error, result, field) => {
                         if (error) {
                             res.status(500).send({ error: error })
