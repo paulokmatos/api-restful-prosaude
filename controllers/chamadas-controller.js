@@ -198,7 +198,7 @@ exports.patchChamarPaciente = async (req, res, next) => {
 };
 
 
-exports.patchPacienteAtendido = async (req, res, next) => {
+exports.patchChamadaAtendida = async (req, res, next) => {
     try {
         await mysql.getConnection((error, conn) => {
             if (error) {
