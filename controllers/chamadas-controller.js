@@ -117,6 +117,8 @@ exports.patchChamarPaciente = (req, res, next) => {
                     return { data: chamada.data_hora }
                 });
 
+                const dataChamada = chamada[0].data;
+
 
 
 
@@ -131,7 +133,7 @@ exports.patchChamarPaciente = (req, res, next) => {
                             mensagem: 'Paciente irá ser Chamado'
                         };
 
-                        res.status(200).send(chamada[0])
+                        res.status(200).send(dataChamada)
                     }
                 )
             }
