@@ -55,29 +55,33 @@ exports.getCargoIdUsuario = (req, res, next) => {
         conn.end();
     })
 };
-exports.getListaTipoCargo = (req, res, next) => {
-    mysql.getConnection((error, conn) => {
-        if (error) {
-            res.status(500).send({ error: error })
-        }
-        conn.query(
-            'SELECT * FROM cargos_tipo',
-            (error, result, field) => {
-                if (error) {
-                    res.status(500).send({ error: error })
-                }
-
-                const response = result.map(car => {
-                    return {
-                        id_cargo: car.id_cargo,
-                        nome_cargo: car.nome_cargo
-                    }
-                });
-                return res.status(200).send(response)
+exports.getListaTipoCargo = async (req, res, next) => {
+    try {
+        await mysql.getConnection((error, conn) => {
+            if (error) {
+                res.status(500).send({ error: error })
             }
-        )
-        conn.end();
-    })
+            conn.query(
+                'SELECT * FROM cargos_tipo',
+                (error, result, field) => {
+                    if (error) {
+                        res.status(500).send({ error: error })
+                    }
+
+                    const response = result.map(car => {
+                        return {
+                            id_cargo: car.id_cargo,
+                            nome_cargo: car.nome_cargo
+                        }
+                    });
+                    return res.status(200).send(response)
+                }
+            )
+            conn.end();
+        })
+    } catch (error) {
+        res.status(500).send({ error: error })
+    }
 };
 exports.getTipoIdCargo = (req, res, next) => {
     mysql.getConnection((error, conn) => {
