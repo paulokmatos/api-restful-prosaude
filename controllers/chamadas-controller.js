@@ -132,7 +132,7 @@ exports.patchChamarPaciente = (req, res, next) => {
                             mensagem: 'Paciente irá ser Chamado'
                         };
 
-                        res.status(200).send(datachamada)
+                        res.status(200).send(dataChamada)
                     }
                 )
             }
