@@ -71,6 +71,10 @@ exports.postChamada = (req, res, next) => {
 
     const id = uniqid();
 
+    let hoje = new Date();
+    let data = hoje.getFullYear() + "-" + hoje.getMonth() + "-" + hoje.getDate();
+    let time = hoje.getHours() + ":" + hoje.getMinutes() + ":" + hoje.getSeconds();
+    let data_hora = data + " " + time;
 
     const date = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
 
@@ -81,7 +85,7 @@ exports.postChamada = (req, res, next) => {
         }
 
         conn.query(
-            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,NOW(),0)`,
+            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,` + data_hora + `,0)`,
             [req.body.medico, req.body.id_paciente, req.body.id_sala],
             (error, result, field) => {
                 if (error) {
