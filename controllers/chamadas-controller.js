@@ -125,11 +125,15 @@ exports.patchChamarPaciente = async (req, res, next) => {
                 res.status(500).send({ error: error })
             }
             conn.query(
-                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora FROM (SELECT MIN(data_hora) AS data_hora FROM chamadas WHERE chamar = false AND id_sala = ?) AS x`,
+                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,id_paciente FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, id_paciente as id_paciente FROM chamadas WHERE chamar = false AND id_sala = ?) AS x`,
                 [req.params.id_sala],
                 (error, results, field) => {
                     const chamada = results.map(call => {
-                        return { data: call.data_hora }
+                        return {
+                            data: call.data_hora,
+                            id_chamada: call.id_chamada,
+                            id_paciente: call.id_paciente
+                        }
                     });
 
                     const dataChamada = chamada[0].data;
@@ -144,7 +148,9 @@ exports.patchChamarPaciente = async (req, res, next) => {
                                 res.status(500).send({ error: error })
                             }
                             response = {
-                                mensagem: 'Paciente irá ser Chamado'
+                                mensagem: 'Paciente irá ser Chamado',
+                                id_chamada: chamada[0].id_chamada,
+                                id_paciente: chamada[0].id_paciente
                             };
 
                             res.status(200).send(response)
