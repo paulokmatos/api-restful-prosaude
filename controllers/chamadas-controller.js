@@ -74,7 +74,7 @@ exports.postChamada = (req, res, next) => {
 
     let data_hora = new Date().toISOString().slice(0, 19).replace('T', ' ');;
 
-    const date = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+    const date = new Date().toLocaleString({ timeZone: "America/Sao_Paulo" });
 
 
     mysql.getConnection((error, conn) => {
@@ -83,11 +83,7 @@ exports.postChamada = (req, res, next) => {
         }
 
         conn.query(
-<<<<<<< HEAD
-            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,` + Date.now() + `,0)`,
-=======
-            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,` + data_hora + `,0)`,
->>>>>>> parent of 77ada55... date
+            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,` + date + `,0)`,
             [req.body.medico, req.body.id_paciente, req.body.id_sala],
             (error, result, field) => {
                 if (error) {
