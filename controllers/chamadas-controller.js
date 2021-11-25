@@ -134,7 +134,7 @@ exports.getExecutarChamada = async (req, res, next) => {
 
                     const response = result.map(call => {
                         return {
-                            id: call.id_chamada,
+                            id_chamada: call.id_chamada,
                             nome_paciente: call.paciente,
                             nome_sala: call.sala
                         }
