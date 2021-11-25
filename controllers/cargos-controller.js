@@ -3,11 +3,11 @@ const mysql = require('../mysql').pool;
 
 exports.getLista = async (req, res, next) => {
     try {
-        mysql.getConnection((error, conn) => {
+        await mysql.getConnection((error, conn) => {
             if (error) {
                 res.status(500).send({ error: error })
             }
-            await conn.query(
+            conn.query(
                 'SELECT * FROM cargos ',
                 (error, result, field) => {
                     if (error) {
