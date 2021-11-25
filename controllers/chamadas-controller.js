@@ -118,6 +118,38 @@ exports.postChamada = async (req, res, next) => {
     }
 };
 
+exports.getExecutarChamada = async (req, res, next) => {
+    try {
+        await mysql.getConnection((error, conn) => {
+            if (error) {
+                res.status(500).send({ error: error })
+            }
+
+            conn.query(
+                'SELECT id_chamada,(SELECT nome_sala FROM salas WHERE id_sala = chamadas.id_sala)sala,(SELECT nome_paciente FROM pacientes WHERE id_paciente = chamadas.id_paciente) paciente FROM chamadas as chamadas WHERE chamar = true AND atendido = false',
+                (error, result, field) => {
+                    if (error) {
+                        res.status(500).send({ error: error })
+                    }
+
+                    const response = result.map(call => {
+                        return {
+                            id_chamada: call.id_chamada,
+                            id_paciente: call.sala,
+                            id_sala: call.paciente
+                        }
+                    });
+                    return res.status(200).send(response)
+                }
+
+
+            )
+        });
+    } catch (error) {
+        return res.status(500).send({ error: error })
+    }
+};
+
 exports.patchChamarPaciente = async (req, res, next) => {
     try {
         await mysql.getConnection((error, conn) => {
