@@ -28,7 +28,7 @@ exports.getListaSala = async (req, res, next) => {
 
         })
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };
 
@@ -59,7 +59,7 @@ exports.getIdSala = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };
 exports.postSala = async (req, res, next) => {
@@ -89,7 +89,7 @@ exports.postSala = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };
 exports.patchSala = async (req, res, next) => {
@@ -118,6 +118,6 @@ exports.patchSala = async (req, res, next) => {
             conn.end()
         })
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };

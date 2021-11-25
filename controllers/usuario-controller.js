@@ -36,7 +36,7 @@ exports.getListaUsuario = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };
 exports.getIdUsuario = async (req, res, next) => {
@@ -74,7 +74,7 @@ exports.getIdUsuario = async (req, res, next) => {
             conn.end();
         })
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };
 exports.postUsuario = async (req, res, next) => {
@@ -149,7 +149,7 @@ exports.postUsuario = async (req, res, next) => {
 
         })
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };
 
@@ -199,6 +199,6 @@ exports.login = async (req, res, next) => {
                 });
         });
     } catch (error) {
-        return res.status(500).send({ error: error })
+        res.status(500).send({ error: error })
     }
 };
