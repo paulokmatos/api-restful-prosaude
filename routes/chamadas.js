@@ -12,7 +12,7 @@ router.post('/adicionar', login, chamadasController.postChamada);
 
 router.patch('/chamar-paciente/:id_sala', login, chamadasController.patchChamarPaciente)
 
-router.patch('/chamada-finalizada/:id_chamada', login, chamadasController.patchChamadaFinalizada)
+router.patch('/paciente-atendido/:id_chamada', login, chamadasController.patchPacienteAtendido)
 
 
 

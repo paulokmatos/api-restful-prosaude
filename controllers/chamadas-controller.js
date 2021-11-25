@@ -92,7 +92,7 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,finalizado)VALUES('` + id + `',?,?,?,NOW(),false,false)`,
+                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido)VALUES('` + id + `',?,?,?,NOW(),false,false)`,
                 [req.body.medico, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
@@ -166,7 +166,7 @@ exports.patchChamarPaciente = async (req, res, next) => {
 };
 
 
-exports.patchChamadaFinalizada = async (req, res, next) => {
+exports.patchPacienteAtendido = async (req, res, next) => {
     try {
         await mysql.getConnection((error, conn) => {
             if (error) {
@@ -174,7 +174,7 @@ exports.patchChamadaFinalizada = async (req, res, next) => {
             }
 
             conn.query(
-                'UPDATE chamadas SET finalizado = true WHERE id_chamada = ?',
+                'UPDATE chamadas SET atendido = true WHERE id_chamada = ?',
                 [req.params.id_chamada],
                 (error, result, field) => {
                     if (error) {
@@ -182,7 +182,7 @@ exports.patchChamadaFinalizada = async (req, res, next) => {
                     }
 
                     const response = {
-                        mensagem: 'Chamada Finalizada'
+                        mensagem: 'Chamada Atendida'
                     };
                     return res.status(200).send(response)
                 }
