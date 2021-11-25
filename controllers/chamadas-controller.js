@@ -83,7 +83,7 @@ exports.postChamada = (req, res, next) => {
         }
 
         conn.query(
-            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,` + date + `,0)`,
+            `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar)VALUES('` + id + `',?,?,?,` + data_hora + `,0)`,
             [req.body.medico, req.body.id_paciente, req.body.id_sala],
             (error, result, field) => {
                 if (error) {
