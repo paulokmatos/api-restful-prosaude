@@ -1,7 +1,7 @@
 const mysql = require('../mysql').pool;
 
 
-exports.getLista = async (req, res, next) => {
+exports.getLista = (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -13,7 +13,7 @@ exports.getLista = async (req, res, next) => {
                     res.status(500).send({ error: error })
                 }
 
-                const response = await result.map(car => {
+                const response = result.map(car => {
                     return {
                         id_cargo: car.id_cargo,
                         id_usuario: car.id_usuario
@@ -21,7 +21,7 @@ exports.getLista = async (req, res, next) => {
                     }
                 });
 
-                return await res.status(200).send(response)
+                return res.status(200).send(response)
 
             }
         )
@@ -30,7 +30,7 @@ exports.getLista = async (req, res, next) => {
 
 };
 
-exports.getCargoIdUsuario = async (req, res, next) => {
+exports.getCargoIdUsuario = (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -43,19 +43,19 @@ exports.getCargoIdUsuario = async (req, res, next) => {
                     res.status(500).send({ error: error })
                 }
 
-                const response = await result.map(car => {
+                const response = result.map(car => {
                     return {
                         id_cargo: car.id_cargo,
                         id_usuario: car.id_usuario
                     }
                 });
-                return await res.status(200).send(response)
+                return res.status(200).send(response)
             }
         )
         conn.end();
     })
 };
-exports.getListaTipoCargo = async (req, res, next) => {
+exports.getListaTipoCargo = (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -67,19 +67,19 @@ exports.getListaTipoCargo = async (req, res, next) => {
                     res.status(500).send({ error: error })
                 }
 
-                const response = await result.map(car => {
+                const response = result.map(car => {
                     return {
                         id_cargo: car.id_cargo,
                         nome_cargo: car.nome_cargo
                     }
                 });
-                return await res.status(200).send(response)
+                return res.status(200).send(response)
             }
         )
         conn.end();
     })
 };
-exports.getTipoIdCargo = async (req, res, next) => {
+exports.getTipoIdCargo = (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -92,20 +92,20 @@ exports.getTipoIdCargo = async (req, res, next) => {
                     res.status(500).send({ error: error })
                 }
 
-                const response = await result.map(car => {
+                const response = result.map(car => {
                     return {
                         id_cargo: car.id_cargo,
                         nome_cargo: car.nome_cargo
                     }
                 });
-                return await res.status(200).send(response)
+                return res.status(200).send(response)
             }
         )
         conn.end();
     })
 };
 
-exports.postCargoUsuario = async (req, res, next) => {
+exports.postCargoUsuario = (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -123,14 +123,14 @@ exports.postCargoUsuario = async (req, res, next) => {
                     id_cargo: req.body.id_cargo,
                     id_usuario: req.body.id_usuario
                 };
-                return await res.status(200).send(response);
+                return res.status(200).send(response);
             }
         )
         conn.end();
     })
 };
 
-exports.postTipoCargo = async (req, res, next) => {
+exports.postTipoCargo = (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -148,7 +148,7 @@ exports.postTipoCargo = async (req, res, next) => {
                     id_cargo: req.body.id_cargo,
                     nome_cargo: req.body.nome_cargo
                 };
-                return await res.status(200).send(response);
+                return res.status(200).send(response);
             }
         )
         conn.end();
