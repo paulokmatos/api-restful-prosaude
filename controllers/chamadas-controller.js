@@ -1,5 +1,5 @@
 const mysql = require('../mysql').pool;
-
+const moment = require('moment');
 
 exports.getListaSala = async (req, res, next) => {
     try {
@@ -81,9 +81,14 @@ exports.postChamada = async (req, res, next) => {
         const id = uniqid();
 
 
-        let data_hora = new Date().toISOString().slice(0, 19).replace('T', ' ');;
-
-        const date = new Date().toLocaleString({ timeZone: "America/Sao_Paulo" });
+        function dataMoment() {
+            const date = new Date();
+            const format = "Y-m-d HH:mm:ss";
+            const timezone = "America/Sao_Paulo";
+            const data = moment.tz(date, format, timezone);
+            return data;
+        }
+        const data_hora = dataMoment();
 
 
         await mysql.getConnection((error, conn) => {
@@ -92,7 +97,7 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido)VALUES('` + id + `',?,?,?,NOW(),false,false)`,
+                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido)VALUES('` + id + `',?,?,?,'` + data_hora + `',false,false)`,
                 [req.body.medico, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
@@ -156,6 +161,16 @@ exports.patchChamarPaciente = async (req, res, next) => {
             if (error) {
                 res.status(500).send({ error: error })
             }
+
+            function dataMoment() {
+                const date = new Date();
+                const format = "Y-m-d HH:mm:ss";
+                const timezone = "America/Sao_Paulo";
+                const data = moment.tz(date, format, timezone);
+                return data;
+            }
+            const data_hora = dataMoment();
+
             conn.query(
                 `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,id_paciente FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, id_paciente as id_paciente FROM chamadas WHERE chamar = false AND id_sala = ?) AS x`,
                 [req.params.id_sala],
@@ -174,7 +189,7 @@ exports.patchChamarPaciente = async (req, res, next) => {
 
 
                     conn.query(
-                        `UPDATE chamadas SET chamar= true WHERE data_hora LIKE '%` + dataChamada + `%'`,
+                        `UPDATE chamadas SET chamar= true, data_chamada = '` + data_hora + `' WHERE data_hora LIKE '%` + dataChamada + `%'`,
                         (error, result, field) => {
                             if (error) {
                                 res.status(500).send({ error: error })
