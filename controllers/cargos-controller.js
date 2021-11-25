@@ -7,7 +7,7 @@ exports.getLista = async (req, res, next) => {
             if (error) {
                 res.status(500).send({ error: error })
             }
-            await conn.query(
+            conn.query(
                 'SELECT * FROM cargos ',
                 (error, result, field) => {
                     if (error) {
