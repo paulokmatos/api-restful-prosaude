@@ -113,8 +113,8 @@ exports.patchChamarPaciente = (req, res, next) => {
             `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora FROM (SELECT MIN(data_hora) AS data_hora FROM chamadas WHERE id_sala = ?) AS x`,
             [req.params.id_sala],
             (error, results, field) => {
-                const chamada = results.map(chamada => {
-                    return { data: chamada.data_hora }
+                const chamada = results.map(call => {
+                    return { data: call.data_hora }
                 });
 
                 const dataChamada = chamada[0].data;
