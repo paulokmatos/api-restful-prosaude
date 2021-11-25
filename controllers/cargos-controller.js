@@ -55,12 +55,12 @@ exports.getCargoIdUsuario = (req, res, next) => {
         conn.end();
     })
 };
-exports.getListaTipoCargo = async (req, res, next) => {
-    await mysql.getConnection((error, conn) => {
+exports.getListaTipoCargo = (req, res, next) => {
+    mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
         }
-        await conn.query(
+        conn.query(
             'SELECT * FROM cargos_tipo',
             (error, result, field) => {
                 if (error) {
