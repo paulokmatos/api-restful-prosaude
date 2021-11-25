@@ -55,7 +55,7 @@ exports.getCargoIdUsuario = (req, res, next) => {
         conn.end();
     })
 };
-exports.getListaTipoCargo = (req, res, next) => {
+exports.getListaTipoCargo = async (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {
             res.status(500).send({ error: error })
@@ -73,7 +73,7 @@ exports.getListaTipoCargo = (req, res, next) => {
                         nome_cargo: car.nome_cargo
                     }
                 });
-                return res.status(200).send(response)
+                return await res.status(200).send(response)
             }
         )
         conn.end();
