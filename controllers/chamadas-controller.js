@@ -125,7 +125,7 @@ exports.patchChamarPaciente = (req, res, next) => {
 
 
                 conn.query(
-                    `UPDATE chamadas SET chamar= 1 WHERE data_hora LIKE %` + dataChamada + `%`,
+                    `UPDATE chamadas SET chamar= 1 WHERE data_hora LIKE '%` + dataChamada + `%'`,
                     (error, result, field) => {
                         if (error) {
                             res.status(500).send({ error: error })
