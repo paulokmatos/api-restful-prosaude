@@ -44,8 +44,8 @@ exports.getPacienteChamada = async (req, res, next) => {
             }
 
             conn.query(
-                'SELECT * FROM chamadas WHERE id_sala = ? AND nome_paciente = ?',
-                [req.params.id_sala, req.params.nome_paciente],
+                'SELECT * FROM chamadas WHERE id_sala = ? AND cpf = ?',
+                [req.params.id_sala, req.params.cpf],
                 (error, result, field) => {
                     if (error) {
                         res.status(500).send({ error: error })
