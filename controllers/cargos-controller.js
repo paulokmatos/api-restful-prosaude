@@ -34,6 +34,37 @@ exports.getLista = async (req, res, next) => {
 
 };
 
+exports.getGrupoCargos = async (req, res, next) => {
+    try {
+        await mysql.getConnection((error, conn) => {
+            if (error) {
+                res.status(500).send({ error: error })
+            }
+            conn.query(
+                'SELECT * FROM cargos WHERE id_cargo = ?',
+                [req.params.id_cargo],
+                (error, result, field) => {
+                    if (error) {
+                        res.status(500).send({ error: error })
+                    }
+
+                    const response = result.map(car => {
+                        return {
+                            id_cargo: car.id_cargo,
+                            id_usuario: car.id_usuario
+                        }
+                    });
+                    return res.status(200).send(response)
+                }
+            )
+            conn.end();
+        })
+    } catch (error) {
+        return res.status(500).send({ error: error })
+    }
+};
+
+
 exports.getCargoIdUsuario = async (req, res, next) => {
     try {
         await mysql.getConnection((error, conn) => {
