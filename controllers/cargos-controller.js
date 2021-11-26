@@ -41,7 +41,7 @@ exports.getGrupoCargos = async (req, res, next) => {
                 res.status(500).send({ error: error })
             }
             conn.query(
-                'SELECT * FROM cargos WHERE id_cargo = ?',
+                'SELECT id_cargo,id_usuario,(SELECT nome_usuario FROM usuarios WHERE id_usuario= cargos.id_usuario) nome_usuario FROM cargos as cargos WHERE id_cargo = ?',
                 [req.params.id_cargo],
                 (error, result, field) => {
                     if (error) {
@@ -51,7 +51,8 @@ exports.getGrupoCargos = async (req, res, next) => {
                     const response = result.map(car => {
                         return {
                             id_cargo: car.id_cargo,
-                            id_usuario: car.id_usuario
+                            id_usuario: car.id_usuario,
+                            nome_usuario: car.nome_usuario
                         }
                     });
                     return res.status(200).send(response)
