@@ -6,7 +6,7 @@ const chamadasController = require('../controllers/chamadas-controller');
 
 router.get('/lista/:id_sala', login, chamadasController.getListaSala);
 
-router.get('/lista/:id_sala/:id_paciente', login, chamadasController.getPacienteChamada);
+router.get('/lista/:id_sala/:cpf', login, chamadasController.getPacienteChamada);
 
 router.post('/adicionar', login, chamadasController.postChamada);
 
