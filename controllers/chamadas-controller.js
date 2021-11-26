@@ -9,7 +9,7 @@ exports.getListaSala = async (req, res, next) => {
             }
 
             conn.query(
-                'SELECT * FROM chamadas WHERE id_sala = ? ORDER BY data_hora ASC',
+                'SELECT * FROM chamadas WHERE id_sala = ? AND atendido = false ORDER BY data_hora ASC',
                 [req.params.id_sala],
                 (error, result, field) => {
                     if (error) {
