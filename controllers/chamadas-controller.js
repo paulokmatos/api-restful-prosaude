@@ -81,9 +81,16 @@ exports.postChamada = async (req, res, next) => {
         const id = uniqid();
 
 
-        let data_hora = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+        function gerarData() {
+            var data = new Date();
+            var dia = String(data.getDate()).padStart(2, '0');
+            var mes = String(data.getMonth() + 1).padStart(2, '0');
+            var ano = data.getFullYear();
+            dataAtual = ano + '-' + mes + '-' + dia;
+            return dataAtual;
+        }
 
-        const date = new Date().toLocaleString("sv-SE");
+        const data = gerarData() + ' ' + new Date().toLocaleTimeString();
 
 
         await mysql.getConnection((error, conn) => {
@@ -92,7 +99,7 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,?,?,'` + date + `',false,false,0)`,
+                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,?,?,'` + data + `',false,false,0)`,
                 [req.body.medico, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
