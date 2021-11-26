@@ -7,7 +7,7 @@ router.get('/lista', login, cargoController.getLista);
 
 router.get('/:id_usuario', login, cargoController.getCargoIdUsuario);
 
-router.get('/:id_cargo', login, cargoController.getGrupoCargos)
+router.get('/agrupar/:id_cargo', login, cargoController.getGrupoCargos)
 
 router.get('/tipo/lista', login, cargoController.getListaTipoCargo);
 
