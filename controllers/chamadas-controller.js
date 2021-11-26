@@ -157,7 +157,7 @@ exports.patchChamarPaciente = async (req, res, next) => {
                 res.status(500).send({ error: error })
             }
             conn.query(
-                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,id_paciente FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, id_paciente as id_paciente, max_chamadas as max_chamadas FROM chamadas WHERE max_chamadas < 3 AND id_sala = ?) AS x`,
+                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,id_paciente,max_chamadas FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, id_paciente as id_paciente, max_chamadas as max_chamadas FROM chamadas WHERE max_chamadas < 3 AND id_sala = ?) AS x`,
                 [req.params.id_sala],
                 (error, results, field) => {
                     const chamada = results.map(call => {
