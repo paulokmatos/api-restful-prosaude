@@ -124,7 +124,7 @@ exports.getExecutarChamada = async (req, res, next) => {
             }
 
             conn.query(
-                'SELECT id_chamada,(SELECT nome_sala FROM salas WHERE id_sala = chamadas.id_sala)sala,(SELECT nome_paciente FROM pacientes WHERE id_paciente = chamadas.id_paciente) paciente FROM chamadas as chamadas WHERE chamar = true AND atendido = false AND max_chamadas < 3 ORDER BY data_hora ASC LIMIT 1',
+                'SELECT id_chamada,(SELECT nome_sala FROM salas WHERE id_sala = chamadas.id_sala)sala,(SELECT nome_paciente FROM pacientes WHERE id_paciente = chamadas.id_paciente) paciente FROM chamadas as chamadas WHERE chamar = true AND atendido = false AND max_chamadas <= 3 ORDER BY data_hora ASC LIMIT 1',
                 (error, result, field) => {
                     if (error) {
                         res.status(500).send({ error: error })
