@@ -81,17 +81,7 @@ exports.postChamada = async (req, res, next) => {
         const id = uniqid();
 
 
-        let date = new Date();
 
-        let options = {
-            year: "numeric",
-            month: "2-digit",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            second: "numeric"
-        };
-        const data = date.toLocaleString("sv", options);
 
 
         await mysql.getConnection((error, conn) => {
