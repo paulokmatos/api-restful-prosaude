@@ -160,7 +160,7 @@ exports.getExecutarChamada = async (req, res, next) => {
 
                         return res.status(200).send(response)
                     } else {
-                        return res.status(404).send({ mensagem: 'Nenhuma Chamada' })
+                        return res.status(200).send({ mensagem: 'Nenhuma Chamada' })
                     }
 
 
