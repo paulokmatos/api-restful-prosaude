@@ -81,6 +81,17 @@ exports.postChamada = async (req, res, next) => {
         const id = uniqid();
 
 
+        let date = new Date();
+
+        let options = {
+            year: "numeric",
+            month: "2-digit",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric"
+        };
+        const data = date.toLocaleString("sv", options);
 
 
         await mysql.getConnection((error, conn) => {
@@ -89,7 +100,7 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,?,?,NOW(),false,false,0)`,
+                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,?,?,'` + data + `',false,false,0)`,
                 [req.body.medico, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
