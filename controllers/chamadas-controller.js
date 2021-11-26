@@ -174,7 +174,7 @@ exports.patchChamarPaciente = async (req, res, next) => {
 
 
                     conn.query(
-                        `UPDATE chamadas SET chamar= true WHERE data_hora LIKE '%` + dataChamada + `%'`,
+                        `UPDATE chamadas SET chamar= true, data_chamada = NOW() WHERE data_hora LIKE '%` + dataChamada + `%'`,
                         (error, result, field) => {
                             if (error) {
                                 res.status(500).send({ error: error })
