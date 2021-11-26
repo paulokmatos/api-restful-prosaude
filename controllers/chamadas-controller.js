@@ -92,7 +92,7 @@ exports.postChamada = async (req, res, next) => {
 
             conn.query(
                 `INSERT INTO chamadas (id_chamada,medico,nome_paciente,cpf,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,(SELECT nome_paciente FROM pacientes WHERE id_paciente = ?),?,?,NOW(),false,false,0)`,
-                [req.body.medico, req.body.id_paciente, , req.body.id_paciente, req.body.id_sala],
+                [req.body.medico, req.body.id_paciente, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
                         res.status(500).send({ error: error })
