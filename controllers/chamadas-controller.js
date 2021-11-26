@@ -83,7 +83,7 @@ exports.postChamada = async (req, res, next) => {
 
         let data_hora = new Date().toISOString().slice(0, 19).replace('T', ' ');;
 
-        const date = new Date().toLocaleString();
+        const date = new Date().toLocaleString("sv-SE");
 
 
         await mysql.getConnection((error, conn) => {
