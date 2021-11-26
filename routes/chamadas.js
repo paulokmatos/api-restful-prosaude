@@ -14,7 +14,7 @@ router.patch('/chamar-paciente/:id_sala', login, chamadasController.patchChamarP
 
 router.patch('/chamada-atendida/:id_chamada', login, chamadasController.patchChamadaAtendida)
 
-router.get('/executar-chamada', login, chamadasController.getExecutarChamada)
+router.get('/executar-chamada/:id_sala', login, chamadasController.getExecutarChamada)
 
 
 module.exports = router;
