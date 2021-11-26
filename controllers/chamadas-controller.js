@@ -92,7 +92,7 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido)VALUES('` + id + `',?,?,?,NOW(),false,false)`,
+                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,?,?,NOW(),false,false,0)`,
                 [req.body.medico, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
@@ -126,7 +126,7 @@ exports.getExecutarChamada = async (req, res, next) => {
             }
 
             conn.query(
-                'SELECT id_chamada,(SELECT nome_sala FROM salas WHERE id_sala = chamadas.id_sala)sala,(SELECT nome_paciente FROM pacientes WHERE id_paciente = chamadas.id_paciente) paciente FROM chamadas as chamadas WHERE chamar = true AND atendido = false',
+                'SELECT id_chamada,(SELECT nome_sala FROM salas WHERE id_sala = chamadas.id_sala)sala,(SELECT nome_paciente FROM pacientes WHERE id_paciente = chamadas.id_paciente) paciente FROM chamadas as chamadas WHERE chamar = true AND atendido = false ORDER BY data_hora ASC LIMIT 1',
                 (error, result, field) => {
                     if (error) {
                         res.status(500).send({ error: error })
@@ -157,24 +157,26 @@ exports.patchChamarPaciente = async (req, res, next) => {
                 res.status(500).send({ error: error })
             }
             conn.query(
-                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,id_paciente FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, id_paciente as id_paciente FROM chamadas WHERE chamar = false AND id_sala = ?) AS x`,
+                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,id_paciente FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, id_paciente as id_paciente, max_chamadas as max_chamadas FROM chamadas WHERE max_chamadas < 3 AND id_sala = ?) AS x`,
                 [req.params.id_sala],
                 (error, results, field) => {
                     const chamada = results.map(call => {
                         return {
                             data: call.data_hora,
                             id_chamada: call.id_chamada,
-                            id_paciente: call.id_paciente
+                            id_paciente: call.id_paciente,
+                            max_chamadas: call.max_chamadas
                         }
                     });
 
                     const dataChamada = chamada[0].data;
+                    const maxChamadas = chamada[0].max_chamadas;
 
 
 
 
                     conn.query(
-                        `UPDATE chamadas SET chamar= true, data_chamada = NOW() WHERE data_hora LIKE '%` + dataChamada + `%'`,
+                        `UPDATE chamadas SET chamar= true, data_chamada = NOW(),max_chamadas = ` + maxChamadas + ` + 1 WHERE data_hora LIKE '%` + dataChamada + `%'`,
                         (error, result, field) => {
                             if (error) {
                                 res.status(500).send({ error: error })
