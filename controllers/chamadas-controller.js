@@ -19,6 +19,7 @@ exports.getListaSala = async (req, res, next) => {
                     const response = result.map(call => {
                         return {
                             id_chamada: call.id_chamada,
+                            cpf_paciente: call.cpf,
                             medico: call.medico,
                             nome_paciente: call.nome_paciente,
                             id_sala: call.id_sala,
@@ -90,8 +91,8 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,nome_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,(SELECT nome_paciente FROM pacientes WHERE id_paciente = ?),?,NOW(),false,false,0)`,
-                [req.body.medico, req.body.id_paciente, req.body.id_sala],
+                `INSERT INTO chamadas (id_chamada,medico,nome_paciente,cpf,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,(SELECT nome_paciente FROM pacientes WHERE id_paciente = ?),?,?,NOW(),false,false,0)`,
+                [req.body.medico, req.body.id_paciente, , req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
                         res.status(500).send({ error: error })
