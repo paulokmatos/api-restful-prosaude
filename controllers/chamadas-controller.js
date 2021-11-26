@@ -20,7 +20,7 @@ exports.getListaSala = async (req, res, next) => {
                         return {
                             id_chamada: call.id_chamada,
                             medico: call.medico,
-                            id_paciente: call.id_paciente,
+                            nome_paciente: call.nome_paciente,
                             id_sala: call.id_sala,
                             data_hora: call.data_hora
                         }
@@ -43,8 +43,8 @@ exports.getPacienteChamada = async (req, res, next) => {
             }
 
             conn.query(
-                'SELECT * FROM chamadas WHERE id_sala = ? AND id_paciente = ?',
-                [req.params.id_sala, req.params.id_paciente],
+                'SELECT * FROM chamadas WHERE id_sala = ? AND nome_paciente = ?',
+                [req.params.id_sala, req.params.nome_paciente],
                 (error, result, field) => {
                     if (error) {
                         res.status(500).send({ error: error })
@@ -54,7 +54,7 @@ exports.getPacienteChamada = async (req, res, next) => {
                         return {
                             id_chamada: call.id_chamada,
                             medico: call.medico,
-                            id_paciente: call.id_paciente,
+                            nome_paciente: call.nome_paciente,
                             id_sala: call.id_sala,
                             data_hora: call.data_hora,
                         }
@@ -90,7 +90,7 @@ exports.postChamada = async (req, res, next) => {
             }
 
             conn.query(
-                `INSERT INTO chamadas (id_chamada,medico,id_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,(SELECT nome_paciente FROM pacientes WHERE id_paciente = ?),?,NOW(),false,false,0)`,
+                `INSERT INTO chamadas (id_chamada,medico,nome_paciente,id_sala,data_hora,chamar,atendido, max_chamadas)VALUES('` + id + `',?,(SELECT nome_paciente FROM pacientes WHERE id_paciente = ?),?,NOW(),false,false,0)`,
                 [req.body.medico, req.body.id_paciente, req.body.id_sala],
                 (error, result, field) => {
                     if (error) {
@@ -124,7 +124,7 @@ exports.getExecutarChamada = async (req, res, next) => {
             }
 
             conn.query(
-                'SELECT max_chamadas,id_chamada,(SELECT nome_sala FROM salas WHERE id_sala = chamadas.id_sala)sala, id_paciente as  paciente FROM chamadas as chamadas WHERE  chamar = true AND atendido = false AND max_chamadas < 3 ORDER BY data_hora ASC LIMIT 1',
+                'SELECT max_chamadas,id_chamada,(SELECT nome_sala FROM salas WHERE id_sala = chamadas.id_sala)sala, nome_paciente as  paciente FROM chamadas as chamadas WHERE  chamar = true AND atendido = false AND max_chamadas < 3 ORDER BY data_hora ASC LIMIT 1',
                 (error, result, field) => {
                     if (error) {
                         res.status(500).send({ error: error })
@@ -180,14 +180,14 @@ exports.patchChamarPaciente = async (req, res, next) => {
                 res.status(500).send({ error: error })
             }
             conn.query(
-                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,id_paciente FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, id_paciente as id_paciente FROM chamadas WHERE max_chamadas < 3 AND id_sala = ?) AS x`,
+                `SELECT DATE_FORMAT(data_hora,'%Y-%m-%d %T')data_hora,id_chamada,nome_paciente FROM (SELECT MIN(data_hora) AS data_hora,id_chamada as id_chamada, nome_paciente as nome_paciente FROM chamadas WHERE max_chamadas < 3 AND id_sala = ?) AS x`,
                 [req.params.id_sala],
                 (error, results, field) => {
                     const chamada = results.map(call => {
                         return {
                             data: call.data_hora,
                             id_chamada: call.id_chamada,
-                            id_paciente: call.id_paciente
+                            nome_paciente: call.nome_paciente
                         }
                     });
 
@@ -205,7 +205,7 @@ exports.patchChamarPaciente = async (req, res, next) => {
                             response = {
                                 mensagem: 'Paciente irá ser Chamado',
                                 id_chamada: chamada[0].id_chamada,
-                                id_paciente: chamada[0].id_paciente
+                                nome_paciente: chamada[0].nome_paciente
                             };
 
                             res.status(200).send(response)
