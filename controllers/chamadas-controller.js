@@ -55,6 +55,7 @@ exports.getPacienteChamada = async (req, res, next) => {
                         return {
                             id_chamada: call.id_chamada,
                             medico: call.medico,
+                            cpf_paciente: call.cpf,
                             nome_paciente: call.nome_paciente,
                             id_sala: call.id_sala,
                             data_hora: call.data_hora,
@@ -102,7 +103,7 @@ exports.postChamada = async (req, res, next) => {
                         mensagem: 'Paciente na fila de Chamadas',
                         id_chamada: id,
                         medico: req.body.medico,
-                        id_paciente: req.body.id_paciente,
+                        cpf_paciente: req.body.id_paciente,
                         id_sala: req.body.id_sala,
                         data_hora: req.body.data_hora
                     };
